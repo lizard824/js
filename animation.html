@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>animation</title>
+    <style type="text/css">
+    *{
+        margin:0;
+        padding: 0;
+    }
+        #box{
+            position: absolute;
+            top: 0;
+            padding: 0;
+            width: 100px;
+            height: 100px;
+            backgroud:lightblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script type="text/javascript">
+        var oBox = document.getElementById("box");
+        oBox.offsetWidth
+        var maxLeft = (document.documentElement.clientWidth || document.body.clientWidth)
+        var duration = 2000,step =(maxLeft/duration)*10;
+        var timer = window.setInterval(function(){
+            var curLeft;
+            curLeft +=step
+        },10)
+
+        //如果有参数 调用（target）就会占用作用域 没办法销毁
+        timer = window.setTimeout(function(){ move(target);},10);
+
+
+
+    </script>
+</body>
+</html>

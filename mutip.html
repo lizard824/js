@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+	<title>Mutip pics</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+			font-size: 14px;
+
+		}
+		ul,li {
+			list-style: none;
+		}
+		img{
+			display: block;
+			border:  none;
+		}
+		/*最外层容器是不设定宽高的*/
+		.news{
+			padding: 10px
+		}
+		.news li{
+			height: 60px;
+			padding:10px 0;
+			border-bottom: grey;
+		}
+
+		.news li>div:nth-child(1){
+			position: absolute;
+			top: 10px;
+			left: 0;
+			width: 70px;
+			height: 70px;
+			background: url("img/default.img") no-repeat center #e1e1e1 ;
+			background-size: 100% 100%;
+		}
+		.news li>div:nth-child(1) img {
+			display: none;
+			width: 100%;
+			height: 100%;
+		}
+		.news li>div:last-child {
+			margin-left: 80px;
+			height: 60px;
+		}
+
+		.new li>div:last-child h2{
+		height: ;
+		line-height: ;
+		overflow: hidden;
+		text-overflow: ellipsis;   
+		white-space: nowrap;
+
+	}
+	</style>
+</head>
+<body>
+<ul class="news" id="news">
+	<li>
+		<div>
+			<img src=" " tureImg="./jd.jpg"> 
+		</div>
+		<div>
+			<h2>111111111111</h2>
+			<p>222222222222</p>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="" alt="">
+		</div>
+		<div>
+			<h2></h2>
+			<p></p>
+		</div>
+	</li>
+</ul>
+	
+</body>
+</html>

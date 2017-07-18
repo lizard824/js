@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>选项卡</title>
+	<style >
+		*{
+			margin:0;
+			padding: 0;
+			font-family: "\5FAE\8F6F\96C5\93D1",Helvetica,sans-serif;
+			font-size: 14px;
+			/*禁止用户选中文字*/
+			-webkit-user-select:none; 
+		}
+
+		ul li{
+			list-style: none;
+		}
+
+		.box{
+			width: 500px;
+			margin:10px auto;
+		}
+
+		.box ul{
+			overflow: hidden; 
+			position: relative;
+			top:1px;		
+		}
+		/*clear float effect*/
+ 		.box ul:after{
+ 			content:"";
+ 			display: block;
+ 			clear:both;
+ 		}
+
+
+		.box ul li{
+			float: left;
+			margin-right: 15px;
+			width:100px;
+			heigth:30px;
+			line-height: 30px;
+			text-align: center;
+			cursor: pointer;
+			border:1px solid green;
+			border-bottom-color: lightblue;
+		}
+		.box ul li.select{
+			background: lightblue;
+		}
+
+		.box div{
+			display: none;
+			height:150px;
+			line-height: 150px;
+			text-align: center;
+			background: lightblue;
+			border:1px solid green;
+			clear:both;
+		}
+		.box div.select{
+			display: block;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="box" id="tabFir">
+		<ul id="tabOptions">
+			<li class="select" >tab1</li>
+			<li>tab2</li>
+			<li>tab3</li>
+		</ul>
+		<div class="select">
+		content1
+		</div>
+		<div>content2</div>
+		<div>content3</div>
+	</div>
+	<script type="text/javascript">
+		var tabFir = document.getElementById("tabFir"), oLis = tabFir.getElementsByTagName("li"),oDiv = tabFir.getElementsByTagName("div");
+		function changTab(n){
+		    for(var i=0;i<oLis.length;i++){
+		        oLis[i].className=null;
+		        oDiv[i].className=null;
+			}
+			oDiv[n].className="select";
+			oLis[n].className="select";
+
+		}
+		//JS中所有的事件绑定都是异步编程，开始只是给元素的点击行为绑定了一个方法，但是手动点击才会执行这个方法，在此期间不会干等，继续循环
+		//1）解决 自定义属性的方式
+//		for(var i =0; i<oLis.length;i++){
+//		    oLis[i].index=i;//定义一个index属性
+//		    oLis[i].onclick=function () {
+//				changTab(this.index);
+//            }
+//		}
+		//2）使用闭包  onclick事件占用了function 不释放 形成多个不同的 私有作用域
+//        for(var i =0; i<oLis.length;i++){
+//            ~function (i) {
+//                oLis[i].onclick=function () {
+//                    changTab(i);
+//                }
+//            }(i);
+//
+//        }
+
+        for(var i =0; i<oLis.length;i++){
+            oLis[i].onclick=(function (i) {
+				return function () {
+					changTab(i);
+                }
+            })(i);
+		}
+
+
+
+
+	</script>
+</body>
+</html>

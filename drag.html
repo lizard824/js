@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>drag</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #box {
+            /*position: absolute;*/
+            /*top:50%;*/
+            /*left: 50%;*/
+            /*margin: -100px 0 0 -100px;*/
+            /*width: 200px;*/
+            /*height: 200px;*/
+            position: absolute;
+            /*top: 0;*/
+            /*left:0;*/
+            /*bottom: 0;*/
+            /*right: 0;*/
+            /*margin: auto;*/
+            width: 200px;
+            height: 200px;
+            background: red;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script type="text/javascript">
+    //拖拽原理 onmousemove onmouseup
+
+    //js实现让当前的元素在屏幕居中的位置
+    var box = document.getElementById("box");
+    box.style.top = ( (document.documentElement.clientHeight || document.body.clientHeight) - box.offsetHeight) / 2 + "px";
+    box.style.left = ( (document.documentElement.clientWidth || document.body.clientWidth) - box.offsetWidth) / 2 + "px";
+    box.onmousedown = down;
+    function down(e) {
+        e = e || window.event;
+        //记录位置
+        this["strX"] = e.clientX;
+        this["strY"] = e.clientY;
+        this["strL"] = parseFloat(this.style.left);
+        this["strT"] = parseFloat(this.style.top);
+        //鼠标移动过快的时候，鼠标脱离盒子 绑定移动和抬起的事件
+        //兼容chrome move up事件绑定给document
+        if(this.setCapture) {
+            this.setCapture();//IE FIREFOX
+
+            this.onmousemove = move;
+            this.onmouseup = up;
+        }else {
+            var that = this;
+            document.onmousemove = function (e) {
+                move.call(that,e);
+            }
+            document.onmouseup= function (e) {
+                up.call(that,e);
+            }
+        }
+    }
+    //记录鼠标的开始位置strX、strY 和盒子的开始位置
+    function move(e) {
+        e = e || window.event;
+        var curL = (e.clientX - this["strX"]) + this["strL"];
+        var curT = (e.clientY - this["strY"]) + this["strT"];
+
+        //borderless
+        var minL = 0, minT = 0,
+            maxL = (document.documentElement.clientWidth || document.body.clientWidth ) - this.offsetWidth,
+            maxT = (document.documentElement.clientHeight || document.body.clientHeight) - this.offsetHeight;
+            curL=curL<minL?minL:(curL>maxL?maxL:curL);
+            curT=curT<minT?minT:(curT>maxT?maxT:curT);
+            this.style.left = curL + "px";
+            this.style.top = curT + "px";
+    }
+    function up(e) {
+        if(this.releaseCapture) {
+            this.releaseCapture();
+            this.onmousemove = null;
+            this.onmouseup = null;
+        }else {
+            document.onmousemove = null;
+            document.onmouseup = null;
+        }
+    }
+
+
+</script>
+</body>
+</html>
